@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         //createPostv2();
         //createPostv3();
         //updatePostPUT();
-        updatePostPATCH();
+        //updatePostPATCH();
+        deletePost();
     }
 
     private void getPost() {
@@ -344,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updatePostPUT(){
+    private void updatePostPUT() {
         Post post = new Post(12, null, "New Text");
 
         Call<Post> call = jsonPlaceHolder.putPost(5, post);
@@ -375,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updatePostPATCH(){
+    private void updatePostPATCH() {
         Post post = new Post(12, null, "New Text");
 
         Call<Post> call = jsonPlaceHolder.patchPost(5, post);
@@ -401,6 +402,22 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
+            }
+        });
+    }
+
+    private void deletePost() {
+        Call<Void> call = jsonPlaceHolder.deletePost(5);
+
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                textViewResult.setText("Code: " + response.code());
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
                 textViewResult.setText(t.getMessage());
             }
         });
