@@ -16,6 +16,14 @@ public interface JsonPlaceHolder {
     @GET("posts")
     Call<List<Post>> getPostv2(@Query("userId") int userId);
 
+//    define querry with more parameters
+    @GET("posts")
+    Call<List<Post>> getPostv3(
+            @Query("userId") Integer[] userId,
+            @Query("_sort") String sort,
+            @Query("_order") String order
+    );
+
 //    define path v1
     @GET("posts/{id}/comments")
     Call<List<Comment>> getComments(@Part("id") int postId);
