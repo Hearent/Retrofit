@@ -6,6 +6,7 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -56,4 +57,8 @@ public interface JsonPlaceHolder {
             @Field("title") String title,
             @Field("body") String text
     );
+    //post request v3
+    @FormUrlEncoded
+    @POST("posts")
+    Call<Post> createPostv3(@FieldMap Map<String, String> fields);
 }

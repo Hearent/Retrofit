@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
         //getPostv4();
         //getCommentsv2();
         //createPost();
-        createPostv2();
+        //createPostv2();
+        createPostv3();
     }
 
     private void getPost() {
@@ -269,6 +270,43 @@ public class MainActivity extends AppCompatActivity {
 
     private void createPostv2() {
         Call<Post> call = jsonPlaceHolder.createPostv2(23, "New Title", "New Text");
+
+        call.enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                if (!response.isSuccessful()) {
+                    textViewResult.setText("Code " + response.code());
+                    return;
+                }
+                Post postResponse = response.body();
+
+                String content = "";
+                content += "Code: " + response.code() + "\n";
+                content += "ID: " + postResponse.getId() + "\n";
+                content += "User ID: " + postResponse.getUserId() + "\n";
+                content += "Title: " + postResponse.getTitle() + "\n";
+                content += "Text: " + postResponse.getText() + "\n\n";
+
+                textViewResult.setText(content);
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
+
+            }
+        });
+    }
+
+    private void createPostv3() {
+
+        Map<String, String> fields = new HashMap<>();
+
+        fields.put("userId", "23");
+        fields.put("title", "New Title");
+        fields.put("body", "New Text");
+
+        Call<Post> call = jsonPlaceHolder.createPostv3(fields);
 
         call.enqueue(new Callback<Post>() {
             @Override
