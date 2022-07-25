@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         //createPostv3();
         //updatePostPUT();
         //updatePostPATCH();
-        deletePost();
+        //deletePost();
     }
 
     private void getPost() {
