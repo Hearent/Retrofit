@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         //getComments();
         //getPostv2();
         //getPostv3();
-        getPostv4();
+        //getPostv4();
+        getCommentsv2();
 
     }
     private void getPost(){
@@ -167,6 +168,36 @@ public class MainActivity extends AppCompatActivity {
     }
     private void getComments(){
         Call<List<Comment>> call = jsonPlaceHolder.getComments(3);
+
+        call.enqueue(new Callback<List<Comment>>() {
+            @Override
+            public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
+                if(!response.isSuccessful()){
+                    textViewResult.setText("Code: " + response.code());
+                    return;
+                }
+                List<Comment> comments = response.body();
+
+                for(Comment comment: comments){
+                    String content = "";
+                    content += "Post ID: "+comment.getPostId()+"\n";
+                    content +="ID: "+comment.getId()+"\n";
+                    content +="Name: "+comment.getName()+"\n";
+                    content +="Email: "+comment.getEmail()+"\n";
+                    content +="Text: "+comment.getText()+"\n\n";
+
+                    textViewResult.append(content);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Comment>> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
+            }
+        });
+    }
+    private void getCommentsv2(){
+        Call<List<Comment>> call = jsonPlaceHolder.getCommentsv2("posts/3/comments");
 
         call.enqueue(new Callback<List<Comment>>() {
             @Override
