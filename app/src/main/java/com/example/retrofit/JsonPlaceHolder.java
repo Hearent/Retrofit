@@ -5,6 +5,8 @@ import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -34,13 +36,24 @@ public interface JsonPlaceHolder {
             @Query("_order") String order
     );
 
-    //    define querry with unlimited parameters
+    //define querry with unlimited parameters
     @GET("posts")
     Call<List<Post>> getPostv4(@QueryMap Map<String, String> parameters);
 
+    //get request from using URL
     @GET
     Call<List<Comment>> getCommentsv2(@Url String url);
 
+    //post request
     @POST("posts")
-    Call <Post>createPost(@Body Post post);
+    Call<Post> createPost(@Body Post post);
+
+    //post request v2
+    @FormUrlEncoded
+    @POST("posts")
+    Call<Post> createPostv2(
+            @Field("userId") int userId,
+            @Field("title") String title,
+            @Field("body") String text
+    );
 }
