@@ -1,11 +1,13 @@
 package com.example.retrofit;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface JsonPlaceHolder {
 // simple get all posts
@@ -23,6 +25,9 @@ public interface JsonPlaceHolder {
             @Query("_sort") String sort,
             @Query("_order") String order
     );
+//    define querry with more parameters
+    @GET("posts")
+    Call<List<Post>> getPostv4(@QueryMap Map<String, String> parameters);
 
 //    define path v1
     @GET("posts/{id}/comments")
